@@ -241,7 +241,7 @@ function PlayState:calculateMatches()
         -- the new upper gaps that exist
         Timer.tween(0.25, tilesToFall):finish(function()
             
-            -- activate shine on tiles
+            -- activate shine on tilesz
             if #self.board.shinyCoord > 0 then
                 for y = 1, 8 do
                     for k, coord in pairs(self.board.shinyCoord[1]) do

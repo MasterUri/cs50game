@@ -197,6 +197,26 @@ function Board:calculateMatches()
     return #self.matches > 0 and self.matches or false
 end
 
+-- activate shine on tiles
+function Board:makeShiny()
+    if #self.shinyCoord > 0 then
+        for y = 1, 8 do
+            for k, coord in pairs(self.shinyCoord[1]) do
+                if y == coord then
+                    for x = 1, 8 do
+                        for j, coord in pairs(self.shinyCoord[2]) do
+                            if x == coord then
+                                self.tiles[y][x].shiny = true
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        self.shinyCoord = {}
+    end
+end
+
 --[[
     Remove the matches from the Board by just setting the Tile slots within
     them to nil, then setting self.matches to nil.

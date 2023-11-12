@@ -242,23 +242,8 @@ function PlayState:calculateMatches()
         Timer.tween(0.25, tilesToFall):finish(function()
             
             -- activate shine on tiles
-            if #self.board.shinyCoord > 0 then
-                for y = 1, 8 do
-                    for k, coord in pairs(self.board.shinyCoord[1]) do
-                        if y == coord then
-                            for x = 1, 8 do
-                                for j, coord in pairs(self.board.shinyCoord[2]) do
-                                    if x == coord then
-                                        self.board.tiles[y][x].shiny = true
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-                self.board.shinyCoord = {}
-            end
-
+            self.board:makeShiny()
+            
             -- recursively call function in case new matches have been created
             -- as a result of falling blocks once new blocks have finished falling
             self:calculateMatches()
@@ -288,6 +273,7 @@ function PlayState:render()
         love.graphics.setBlendMode('alpha')
     end
 
+    --[[
     -- render shiny tile
     if self.isShiny then
 
@@ -299,6 +285,7 @@ function PlayState:render()
 
         love.graphics.setBlendMode('alpha')
     end
+    ]]
 
     -- render highlight rect color based on timer
     if self.rectHighlighted then

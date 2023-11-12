@@ -242,6 +242,8 @@ function PlayState:calculateMatches()
         Timer.tween(0.25, tilesToFall):finish(function()
             
             -- activate shine on tiles
+            --self.board:makeShiny()
+            
             if #self.board.shinyCoord > 0 then
                 for y = 1, 8 do
                     for k, coord in pairs(self.board.shinyCoord[1]) do

@@ -41,5 +41,15 @@ function Tile:render(x, y)
     love.graphics.draw(gTextures['main'], gFrames['tiles'][self.color][self.variety],
         self.x + x, self.y + y)
 
-    
+    -- render shiny tile
+    if self.isShiny then
+
+        love.graphics.setBlendMode('add')
+
+        love.graphics.setColor(1, 1, 1, self.shinyTimer/255)
+        love.graphics.rectangle('fill', (self.isShiny.gridX - 1) * 32 + (VIRTUAL_WIDTH - 272),
+            (self.isShiny.gridY - 1) * 32 + 16, 32, 32, 4)
+
+        love.graphics.setBlendMode('alpha')
+    end
 end
