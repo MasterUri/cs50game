@@ -87,8 +87,7 @@ function Board:calculateMatches()
                     for x2 = x - 1, x - matchNum, -1 do
                         if self.tiles[y][x2].shiny then
                             shinyMatch = true
-                        
-                        -- getting the coordinates for shiny tiles if it is not a shiny match
+                            
                         elseif matchNum >= 4 then
                 
                             table.insert(shinyY, y)
@@ -108,6 +107,9 @@ function Board:calculateMatches()
                     table.insert(matches, match)
                 end
 
+                -- getting the coordinates for the shiny tiles
+                
+
                 matchNum = 1
 
                 -- don't need to check last two if they won't be in a match
@@ -126,8 +128,6 @@ function Board:calculateMatches()
             for x = 8, 8 - matchNum + 1, -1 do
                 if self.tiles[y][x].shiny then
                     shinyMatch = true
-
-                -- getting coordinates for shiny tiles if it is not a shiny match
                 elseif matchNum >= 4 then
                     table.insert(shinyY, 8)
                     table.insert(shinyX, (8 - math.ceil(matchNum / 2)))
@@ -143,6 +143,8 @@ function Board:calculateMatches()
 
             table.insert(matches, match)
         end
+
+        
     end
 
     -- vertical matches
@@ -160,31 +162,21 @@ function Board:calculateMatches()
 
                 if matchNum >= 3 then
                     local match = {}
-                    local shinyMatch = false
 
                     for y2 = y - 1, y - matchNum, -1 do
-                        if self.tiles[y2][x].shiny then
-                            shinyMatch = true
-
-                        -- getting the coordinates for the shiny tiles if it is not a shiny match
-                        elseif matchNum >= 4 then
-                    
-                            table.insert(shinyY, (y - math.ceil(matchNum / 2)))
-                            table.insert(shinyX, x)
-                        end
-
                         table.insert(match, self.tiles[y2][x])
-                    end
-
-                    if shinyMatch then
-                        for y = 1, 8 do
-                            table.insert(match, self.tiles[y][x])
-                        end
                     end
 
                     table.insert(matches, match)
                 end
                 
+                -- getting the coordinates for the shiny tiles
+                if matchNum >= 4 then
+                    
+                    table.insert(shinyY, (y - math.ceil(matchNum / 2)))
+                    table.insert(shinyX, x)
+                end
+
                 matchNum = 1
 
                 -- don't need to check last two if they won't be in a match
@@ -197,29 +189,19 @@ function Board:calculateMatches()
         -- account for the last column ending with a match
         if matchNum >= 3 then
             local match = {}
-            local shinyMatch = false
             
             -- go backwards from end of last row by matchNum
             for y = 8, 8 - matchNum + 1, -1 do
-                if self.tiles[y][x].shiny then
-                    shinyMatch = true
-
-                -- getting the coordinates for the shiny tiles if it is not a shiny match
-                elseif matchNum >= 4 then
-            
-                    table.insert(shinyY, (8 - math.ceil(matchNum / 2)))
-                    table.insert(shinyX, 8)
-                end
                 table.insert(match, self.tiles[y][x])
             end
 
-            if shinyMatch then
-                for y = 1, 8 do
-                    table.insert(match, self.tiles[y][x])
-                end
-            end
-
             table.insert(matches, match)
+        end
+
+        if matchNum >= 4 then
+            
+            table.insert(shinyY, (8 - math.ceil(matchNum / 2)))
+            table.insert(shinyX, 8)
         end
     end
 
