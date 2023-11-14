@@ -54,6 +54,9 @@ function PlayState:init()
         end
     end)
 
+    -- is the tile shiny
+    self.isShiny = {}
+
     self.shinyTimer = 0
 
 end
@@ -106,6 +109,21 @@ function PlayState:update(dt)
             level = self.level + 1,
             score = self.score
         })
+    end
+
+    -- checking for any shiny tiles on the board
+    for y = 1, 8 do
+        for x = 1, 8 do 
+            if self.board.tiles[y][x].shiny then
+                table.insert(self.isShiny, self.board.tiles[y][x])
+            else
+                for k, tiles in pairs(self.isShiny) do
+                    if tiles == self.board.tiles[y][x] then
+                        table.remove(self.isShiny, tiles)    
+                    end
+                end
+            end
+        end
     end
 
     -- making the tile shine
@@ -293,17 +311,17 @@ function PlayState:render()
         love.graphics.setBlendMode('alpha')
     end
 
-    -- activating shine on tiles
-    for y = 1, 8 do
-        for x= 1, 8 do
-            if self.board.tiles[y][x].shiny then
-                love.graphics.setBlendMode('add')
-                love.graphics.setColor(1, 1, 1, self.shinyTimer/255)
-                love.graphics.rectangle('fill', (x - 1) * 32 + (VIRTUAL_WIDTH - 272),
-                    (y - 1) * 32 + 16, 32, 32, 4)
-                love.graphics.setBlendMode('alpha')
-            end
-        end 
+    -- render shiny tile
+    if #self.isShiny > 0 then
+        for k, shinyTiles in pairs(self.isShiny) do
+            love.graphics.setBlendMode('add')
+
+            love.graphics.setColor(1, 1, 1, self.shinyTimer/255)
+            love.graphics.rectangle('fill', (shinyTiles.gridX - 1) * 32 + (VIRTUAL_WIDTH - 272),
+                (shinyTiles.gridY - 1) * 32 + 16, 32, 32, 4)
+
+            love.graphics.setBlendMode('alpha')
+        end
     end
 
     -- render highlight rect color based on timer

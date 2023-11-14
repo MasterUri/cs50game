@@ -20,7 +20,6 @@ function Board:init(level, x, y)
     self.level = level
     
     self.shinyCoord = {}
-    self.removeShiny = {}
 
     self:initializeTiles()
 end
@@ -243,8 +242,7 @@ function Board:removeMatches()
     for k, match in pairs(self.matches) do
         for k, tile in pairs(match) do
             if tile.shiny then
-                self.removeShiny[1] = tile.gridY
-                self.removeShiny[2] = tile.gridX
+                self.tiles[tile.gridY][tile.gridX].shiny = false
             end
             self.tiles[tile.gridY][tile.gridX] = nil
         end
