@@ -287,6 +287,8 @@ function Board:removeMatches()
     end
 
     self.matches = nil
+
+    self.checkPotentialMatches()
 end
 
 --[[

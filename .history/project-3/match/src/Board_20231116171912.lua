@@ -45,46 +45,14 @@ function Board:initializeTiles()
         -- a matchless board on start
         self:initializeTiles()
     end
-
-    self:checkPotentialMatches()
 end
 
 function Board:checkPotentialMatches()
     local potentialMatches = 0
-    local tempTile = nil
 
-    -- check horizontally
-    for y = 1, 8 do
-        for x = 1, 7 do
-            tempTile = self.tiles[y][x]
-            self.tiles[y][x] = self.tiles[y][x + 1]
-            self.tiles[y][x + 1] = tempTile
-            if self:calculateMatches() then
-                potentialMatches = potentialMatches +1
-            end
-            self.tiles[y][x + 1] = self.tiles[y][x]
-            self.tiles[y][x] = tempTile
-            tempTile = nil
-        end
-    end
-
-    -- check vertically
-    for y = 1, 7 do
-        for x = 1, 8 do
-            tempTile = self.tiles[y][x]
-            self.tiles[y][x] = self.tiles[y + 1][x]
-            self.tiles[y + 1][x] = tempTile
-            if self:calculateMatches() then
-                potentialMatches = potentialMatches +1
-            end
-            self.tiles[y + 1][x] = self.tiles[y][x]
-            self.tiles[y][x] = tempTile
-            tempTile = nil
-        end
-    end
     
-    if potentialMatches < 1 then
-        self:initializeTiles()
+    if potentialMatches == 0 then
+        self:initializeTiles
     end
 end
 
