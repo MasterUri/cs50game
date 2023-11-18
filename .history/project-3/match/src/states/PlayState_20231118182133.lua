@@ -158,6 +158,7 @@ function PlayState:update(dt)
                 self.highlightedTile = nil
             else
                 
+                --[[
                 -- swap grid positions of tiles
                 local tempX = self.highlightedTile.gridX
                 local tempY = self.highlightedTile.gridY
@@ -181,6 +182,9 @@ function PlayState:update(dt)
                     [self.highlightedTile] = {x = newTile.x, y = newTile.y},
                     [newTile] = {x = self.highlightedTile.x, y = self.highlightedTile.y}
                 })
+                ]]
+
+                self:swapTiles(x, y)
                 
                 -- once the swap is finished, we can tween falling blocks as needed
                 :finish(function()
@@ -191,6 +195,54 @@ function PlayState:update(dt)
     end
 
     Timer.update(dt)
+end
+
+function PlayState:swapTiles(x, y)
+    -- swap grid positions of tiles
+    local tempX = self.highlightedTile.gridX
+    local tempY = self.highlightedTile.gridY
+
+    local newTile = self.board.tiles[y][x]
+
+    self.highlightedTile.gridX = newTile.gridX
+    self.highlightedTile.gridY = newTile.gridY
+    newTile.gridX = tempX
+    newTile.gridY = tempY
+
+    -- swap tiles in the tiles table
+    self.board.tiles[self.highlightedTile.gridY][self.highlightedTile.gridX] =
+        self.highlightedTile
+
+    self.board.tiles[newTile.gridY][newTile.gridX] = newTile
+
+
+    -- tween coordinates between the two so they swap
+    Timer.tween(0.1, {
+        [self.highlightedTile] = {x = newTile.x, y = newTile.y},
+        [newTile] = {x = self.highlightedTile.x, y = self.highlightedTile.y}
+    })
+
+    local match = self.board.calculateMatches()
+
+    if matches == false then
+        
+        newTile.gridX = self.highlightedTile.gridX
+        newTile.gridY = self.highlightedTile.gridY
+        self.highlightedTile.gridX = tempX
+        self.highlightedTile.gridY = tempY
+
+        self.board.tiles[self.highlightedTile.gridY][self.highlightedTile.gridX] =
+        self.highlightedTile
+
+        self.board.tiles[newTile.gridY][newTile.gridX] = newTile
+
+
+        -- tween coordinates between the two so they swap
+        Timer.tween(0.1, {
+            [self.highlightedTile] = {x = newTile.x, y = newTile.y},
+            [newTile] = {x = self.highlightedTile.x, y = self.highlightedTile.y}
+        })
+    end
 end
 
 --[[

@@ -174,7 +174,21 @@ function PlayState:update(dt)
                     self.highlightedTile
 
                 self.board.tiles[newTile.gridY][newTile.gridX] = newTile
-            
+                
+
+                if self.board:calculateMatches() == false then
+                    newTile.gridX = self.highlightedTile.gridX
+                    newTile.gridY = self.highlightedTile.gridY
+                    self.highlightedTile.gridX = tempX
+                    self.highlightedTile.gridY = tempY
+                    
+                    -- swap tiles in the tiles table
+                    self.board.tiles[self.highlightedTile.gridY][self.highlightedTile.gridX] =
+                        self.highlightedTile
+
+                    self.board.tiles[newTile.gridY][newTile.gridX] = newTile
+
+                end
 
                 -- tween coordinates between the two so they swap
                 Timer.tween(0.1, {

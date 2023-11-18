@@ -169,22 +169,38 @@ function PlayState:update(dt)
                 newTile.gridX = tempX
                 newTile.gridY = tempY
 
-                -- swap tiles in the tiles table
-                self.board.tiles[self.highlightedTile.gridY][self.highlightedTile.gridX] =
-                    self.highlightedTile
-
-                self.board.tiles[newTile.gridY][newTile.gridX] = newTile
-            
-
                 -- tween coordinates between the two so they swap
                 Timer.tween(0.1, {
                     [self.highlightedTile] = {x = newTile.x, y = newTile.y},
                     [newTile] = {x = self.highlightedTile.x, y = self.highlightedTile.y}
                 })
+
+                if self.board:calculateMatches() then
+                    -- swap tiles in the tiles table
+                    self.board.tiles[self.highlightedTile.gridY][self.highlightedTile.gridX] =
+                    self.highlightedTile
+
+                    self.board.tiles[newTile.gridY][newTile.gridX] = newTile
+                else
+                    newTile.gridX = self.highlightedTile.gridX
+                    newTile.gridY = self.highlightedTile.gridY
+                    self.highlightedTile.gridX = tempX
+                    self.highlightedTile.gridY = tempY
+
+                    -- tween coordinates between the two so they swap
+                    Timer.tween(0.1, {
+                        [self.highlightedTile] = {x = newTile.x, y = newTile.y},
+                        [newTile] = {x = self.highlightedTile.x, y = self.highlightedTile.y}
+                    })
+                end
+
+                
+
+                
                 
                 -- once the swap is finished, we can tween falling blocks as needed
                 :finish(function()
-                    self:calculateMatches()              
+                    self:calculateMatches()
                 end)
             end
         end

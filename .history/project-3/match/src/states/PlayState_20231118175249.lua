@@ -174,7 +174,6 @@ function PlayState:update(dt)
                     self.highlightedTile
 
                 self.board.tiles[newTile.gridY][newTile.gridX] = newTile
-            
 
                 -- tween coordinates between the two so they swap
                 Timer.tween(0.1, {
@@ -184,7 +183,9 @@ function PlayState:update(dt)
                 
                 -- once the swap is finished, we can tween falling blocks as needed
                 :finish(function()
-                    self:calculateMatches()              
+                    self:calculateMatches()
+
+                
                 end)
             end
         end
