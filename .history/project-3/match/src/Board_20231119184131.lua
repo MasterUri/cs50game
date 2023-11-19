@@ -46,7 +46,7 @@ function Board:initializeTiles()
         self:initializeTiles()
     end
 
-    self:checkPotentialMatches()
+    --self:checkPotentialMatches()
 end
 
 function Board:checkPotentialMatches()
@@ -170,7 +170,7 @@ function Board:calculateMatches()
 
                 -- getting coordinates for shiny tiles if it is not a shiny match
                 elseif matchNum >= 4 then
-                    table.insert(shinyY, y)
+                    table.insert(shinyY, 8)
                     table.insert(shinyX, (8 - math.ceil(matchNum / 2)))
                 end
                 table.insert(match, self.tiles[y][x])
@@ -249,7 +249,7 @@ function Board:calculateMatches()
                 elseif matchNum >= 4 then
             
                     table.insert(shinyY, (8 - math.ceil(matchNum / 2)))
-                    table.insert(shinyX, x)
+                    table.insert(shinyX, 8)
                 end
                 table.insert(match, self.tiles[y][x])
             end
