@@ -231,6 +231,7 @@ function PlayState:calculateMatches()
         -- the new upper gaps that exist
         Timer.tween(0.25, tilesToFall):finish(function()
             
+            --[[
             -- activate shine on tiles
             if #self.board.shinyCoord > 0 then
                 for y = 1, 8 do
@@ -248,16 +249,16 @@ function PlayState:calculateMatches()
                 end
                 self.board.shinyCoord = {}
             end
+            ]]
 
             -- recursively call function in case new matches have been created
             -- as a result of falling blocks once new blocks have finished falling
             self:calculateMatches()
         end)
         
-        
+        self.board:checkPotentialMatches()
     -- if no matches, we can continue playing
     else
-        self.board:checkPotentialMatches()
         self.canInput = true
     end
 end

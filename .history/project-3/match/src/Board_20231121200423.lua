@@ -131,8 +131,12 @@ function Board:calculateMatches()
                         
                         -- getting the coordinates for shiny tiles if it is not a shiny match
                         elseif matchNum >= 4 then
+                
+                            self.tiles[y][x - math.ceil(matchNum / 2)].shiny = true
+                            
                             table.insert(shinyY, y)
                             table.insert(shinyX, (x - math.ceil(matchNum / 2)))
+                            
                         end
                         -- add each tile to the match that's in that match
                         table.insert(match, self.tiles[y][x2])
@@ -169,8 +173,12 @@ function Board:calculateMatches()
 
                 -- getting coordinates for shiny tiles if it is not a shiny match
                 elseif matchNum >= 4 then
+
+                    self.tiles[y][8 - math.ceil(matchNum / 2)].shiny = true
+                    
                     table.insert(shinyY, y)
                     table.insert(shinyX, (8 - math.ceil(matchNum / 2)))
+                    
                 end
                 table.insert(match, self.tiles[y][x])
             end
@@ -208,8 +216,12 @@ function Board:calculateMatches()
 
                         -- getting the coordinates for the shiny tiles if it is not a shiny match
                         elseif matchNum >= 4 then
+                            
+                            self.tiles[y - math.ceil(matchNum / 2)][x].shiny = true
+                            
                             table.insert(shinyY, (y - math.ceil(matchNum / 2)))
                             table.insert(shinyX, x)
+                            
                         end
 
                         table.insert(match, self.tiles[y2][x])
@@ -245,8 +257,12 @@ function Board:calculateMatches()
 
                 -- getting the coordinates for the shiny tiles if it is not a shiny match
                 elseif matchNum >= 4 then
+            
+                    self.tiles[8 - math.ceil(matchNum / 2)][x].shiny = true
+                    
                     table.insert(shinyY, (8 - math.ceil(matchNum / 2)))
                     table.insert(shinyX, x)
+                    
                 end
                 table.insert(match, self.tiles[y][x])
             end
