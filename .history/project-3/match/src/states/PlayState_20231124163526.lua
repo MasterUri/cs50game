@@ -221,25 +221,6 @@ function PlayState:swapTiles(highlightedTile, boardTile)
     })
 
     :finish(function()
-        if self.board:calculateMatches() == false then
-            newTile.gridX = highlightedTile.gridX
-            newTile.gridY = highlightedTile.gridY
-            highlightedTile.gridX = tempX
-            highlightedTile.gridY = tempY
-            
-            -- swap tiles in the tiles table
-            self.board.tiles[highlightedTile.gridY][highlightedTile.gridX] =
-                self.highlightedTile
-
-            self.board.tiles[newTile.gridY][newTile.gridX] = newTile
-
-
-            -- tween coordinates between the two so they swap
-            Timer.tween(0.1, {
-                [highlightedTile] = {x = newTile.x, y = newTile.y},
-                [newTile] = {x = highlightedTile.x, y = highlightedTile.y}
-            })
-        end
         self:calculateMatches()
     end)
 end
