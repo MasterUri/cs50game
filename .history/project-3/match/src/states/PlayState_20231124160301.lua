@@ -245,7 +245,8 @@ function PlayState:calculateMatches()
         
     -- if no matches, we can continue playing
     else
-        self.board:checkPotentialMatches(1)
+        self.board:checkPotentialMatches()
+        
         self.canInput = true
     end
 end

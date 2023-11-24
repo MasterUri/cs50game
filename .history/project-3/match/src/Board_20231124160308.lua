@@ -47,10 +47,10 @@ function Board:initializeTiles()
         self:initializeTiles()
     end
 
-    self:checkPotentialMatches(3)
+    self:checkPotentialMatches()
 end
 
-function Board:checkPotentialMatches(numberOfMatches)
+function Board:checkPotentialMatches()
     local potentialMatches = 0
     local tempTile = nil
 
@@ -84,7 +84,7 @@ function Board:checkPotentialMatches(numberOfMatches)
         end
     end
     
-    if potentialMatches < numberOfMatches then
+    if potentialMatches < 5 then
         self:initializeTiles()
     end
 end

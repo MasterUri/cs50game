@@ -20,7 +20,6 @@ function Board:init(level, x, y)
     self.level = level
     
     self.shinyCoord = {}
-    self.shinyTemp = {}
 
     self:initializeTiles()
 end
@@ -47,10 +46,10 @@ function Board:initializeTiles()
         self:initializeTiles()
     end
 
-    self:checkPotentialMatches(3)
+    self:checkPotentialMatches()
 end
 
-function Board:checkPotentialMatches(numberOfMatches)
+function Board:checkPotentialMatches()
     local potentialMatches = 0
     local tempTile = nil
 
@@ -84,7 +83,16 @@ function Board:checkPotentialMatches(numberOfMatches)
         end
     end
     
-    if potentialMatches < numberOfMatches then
+    for y = 1, 8 do
+        for x = 1, 8 do
+            if self.tiles[y][x].shiny then
+                self.shinyCoord[1] = y
+                self.shinyCoord[2] = x
+            end
+        end
+    end
+    
+    if potentialMatches < 1 then
         self:initializeTiles()
     end
 end

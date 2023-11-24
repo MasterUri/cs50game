@@ -245,7 +245,11 @@ function PlayState:calculateMatches()
         
     -- if no matches, we can continue playing
     else
-        self.board:checkPotentialMatches(1)
+        self.board:checkPotentialMatches()
+        if #self.board.shinyTemp > 0 then
+            self:activateShine(self.board.shinyTemp)
+            self.board.shinyCoord = {}
+        end
         self.canInput = true
     end
 end

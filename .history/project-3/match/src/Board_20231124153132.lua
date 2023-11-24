@@ -47,10 +47,10 @@ function Board:initializeTiles()
         self:initializeTiles()
     end
 
-    self:checkPotentialMatches(3)
+    self:checkPotentialMatches()
 end
 
-function Board:checkPotentialMatches(numberOfMatches)
+function Board:checkPotentialMatches()
     local potentialMatches = 0
     local tempTile = nil
 
@@ -84,7 +84,21 @@ function Board:checkPotentialMatches(numberOfMatches)
         end
     end
     
-    if potentialMatches < numberOfMatches then
+    if potentialMatches < 1 then
+        local shinyX = {}
+        local shinyY = {}
+
+        for y = 1, 8 do
+            for x = 1, 8 do
+                if self.tiles[y][x].shiny then
+                    table.insert(shinyY, y)
+                    table.insert(shinyX, x)
+                end
+            end
+        end
+        self.shinyTemp[1] = shinyY
+        self.shinyTemp[2] = shinyX
+        
         self:initializeTiles()
     end
 end

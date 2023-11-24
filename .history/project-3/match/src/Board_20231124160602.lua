@@ -47,7 +47,7 @@ function Board:initializeTiles()
         self:initializeTiles()
     end
 
-    self:checkPotentialMatches(3)
+    self:checkPotentialMatches(5)
 end
 
 function Board:checkPotentialMatches(numberOfMatches)

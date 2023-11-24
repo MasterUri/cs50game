@@ -245,7 +245,20 @@ function PlayState:calculateMatches()
         
     -- if no matches, we can continue playing
     else
-        self.board:checkPotentialMatches(1)
+        self.board:checkPotentialMatches()
+        if #self.board.shinyTemp > 0 then
+            for j, tiles in pairs(self.board.tiles) do
+                for k, shiny in pairs(self.board.shinyTemp) do
+                    if (tiles.gridY == shiny.gridY and tiles.gridX == shiny.gridX) then
+                        tiles.shiny = true
+                    end
+                end
+            end
+            --[[
+            self:activateShine(self.board.shinyTemp)
+            self.board.shinyTemp = {}
+            ]]
+        end
         self.canInput = true
     end
 end

@@ -245,7 +245,24 @@ function PlayState:calculateMatches()
         
     -- if no matches, we can continue playing
     else
-        self.board:checkPotentialMatches(1)
+        local shinyCoords = {}
+        for x = 1, 2 do
+            table.insert(shinyCoords, {})
+        end
+
+        for y = 1, 8 do
+            for x = 1, 8 do
+                if self.board.tiles[y][x].shiny then
+                    table.insert(shinyCoords[1], y)
+                    table.insert(shinyCoords[2], x)
+                end
+            end
+        end
+        self.board:checkPotentialMatches()
+        if #shinyCoords > 0 then
+            self:activateShine(shinyCoords)
+            shinyCoords = {}
+        end
         self.canInput = true
     end
 end

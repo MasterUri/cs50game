@@ -233,7 +233,22 @@ function PlayState:calculateMatches()
             
             -- activate shine on tiles
             if #self.board.shinyCoord > 0 then
-                self:activateShine(self.board.shinyCoord)
+                self.activateShine(self.board.shinyCoord)
+                --[[
+                for y = 1, 8 do
+                    for k, coord in pairs(self.board.shinyCoord[1]) do
+                        if y == coord then
+                            for x = 1, 8 do
+                                for j, coord in pairs(self.board.shinyCoord[2]) do
+                                    if x == coord then
+                                        self.board.tiles[y][x].shiny = true
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                ]]
                 self.board.shinyCoord = {}
             end
 
@@ -245,7 +260,8 @@ function PlayState:calculateMatches()
         
     -- if no matches, we can continue playing
     else
-        self.board:checkPotentialMatches(1)
+
+        self.board:checkPotentialMatches()
         self.canInput = true
     end
 end
