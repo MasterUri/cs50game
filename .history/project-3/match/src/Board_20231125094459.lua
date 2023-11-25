@@ -31,7 +31,7 @@ function Board:initializeTiles()
     local tileColor = {}
 
     for n = 1, 8 do
-        table.insert(tileColor, math.random(18))
+        table.insert(tileColor[n], math.random(18))
     end
 
     for tileY = 1, 8 do

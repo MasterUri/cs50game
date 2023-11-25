@@ -28,12 +28,6 @@ end
 function Board:initializeTiles()
     self.tiles = {}
 
-    local tileColor = {}
-
-    for n = 1, 8 do
-        table.insert(tileColor, math.random(18))
-    end
-
     for tileY = 1, 8 do
         
         -- empty table that will serve as a new row
@@ -42,7 +36,7 @@ function Board:initializeTiles()
         for tileX = 1, 8 do
    
             -- create a new tile at X,Y with a random color and symbol according to level
-            table.insert(self.tiles[tileY], Tile(tileX, tileY, tileColor[math.random(8)], math.min(math.random(self.level), math.random(6))))
+            table.insert(self.tiles[tileY], Tile(tileX, tileY, (math.random(8) + math.random(0, 8)), math.min(math.random(self.level), math.random(6))))
         end
     end
 
