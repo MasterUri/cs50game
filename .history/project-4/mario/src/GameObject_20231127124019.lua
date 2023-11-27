@@ -19,13 +19,10 @@ function GameObject:init(def)
     self.collidable = def.collidable
     self.consumable = def.consumable
     self.unlockable = def.unlockable
-    self.raisable = def.raisable
     self.onCollide = def.onCollide
     self.onConsume = def.onConsume
     self.onUnlock = def.onUnlock
-    self.onRaise = def.onRaise
     self.hit = def.hit
-    self.raised = def.raised
 end
 
 function GameObject:collides(target)

@@ -14,8 +14,6 @@ function Player:init(def)
     Entity.init(self, def)
     self.score = 0
     self.hasKey = false
-    self.keyColor = 0
-    self.levelNumber = 0
 end
 
 function Player:update(dt)
@@ -82,8 +80,6 @@ function Player:checkObjectCollisions()
                 else
                     table.insert(collidedObjects, object)
                 end
-            elseif object.raisable then
-                object.onRaise(self, object)
             elseif object.solid then
                 table.insert(collidedObjects, object)
             elseif object.consumable then

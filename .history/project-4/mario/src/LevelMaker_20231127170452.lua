@@ -164,8 +164,7 @@ function LevelMaker.generate(width, height)
                                         Timer.after(2, function ()
                                             gStateMachine:change('play', {
                                                 score = player.score,
-                                                levelNumber = player.levelNumber + 1,
-                                                levelWidth = width + (width / (player.levelNumber + 1))
+                                                levelNumber = player.levelNumber + 1
                                             })
                                         end)
                                     end
@@ -281,8 +280,7 @@ function LevelMaker.generate(width, height)
                                     Timer.after(2, function ()
                                         gStateMachine:change('play', {
                                             score = player.score,
-                                            levelNumber = player.levelNumber + 1,
-                                            levelWidth = width + (width / (player.levelNumber + 1))
+                                            levelNumber = player.levelNumber + 1
                                         })
                                     end)
                                 end
@@ -295,7 +293,7 @@ function LevelMaker.generate(width, height)
             end
 
             -- chance to spawn a block
-            if math.random(10) == 1 and x < (width - 10) then
+            if math.random(10) == 1 and x < 90 then
                 table.insert(objects,
 
                     -- jump block

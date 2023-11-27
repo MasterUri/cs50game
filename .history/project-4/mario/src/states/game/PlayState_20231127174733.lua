@@ -16,6 +16,9 @@ function PlayState:enter(params)
     self.camY = 0
     self.levelNumber = params.levelNumber
     self.levelWidth = params.levelWidth or 100
+    if self.levelNumber > 1 then
+        self.levelWidth = self.levelWidth + (self.levelWidth / self.levelNumber)
+    end
     self.level = LevelMaker.generate(self.levelWidth, 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
@@ -138,9 +141,9 @@ function PlayState:render()
 
     love.graphics.setFont(gFonts['small'])
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 40, 5)
+    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 30, 5)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 39, 4)
+    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 29, 4)
 
 
     -- show icon if player has a key

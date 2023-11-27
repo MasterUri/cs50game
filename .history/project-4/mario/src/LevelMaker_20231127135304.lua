@@ -21,8 +21,8 @@ function LevelMaker.generate(width, height)
     local flagColor = keyColor * 3
     local keyPlaced = false
     local lockPlaced = false
-    local keyPosition = math.random(5, (width - 20))
-
+    local keyPosition = math.random(5, 80)
+    
     -- whether we should draw our tiles with toppers
     local topper = true
     local tileset = math.random(20)
@@ -82,7 +82,7 @@ function LevelMaker.generate(width, height)
                 end
 
                 -- chance to generate a key on pillar
-                if x >= keyPosition and x <= (keyPosition + 5) and keyPlaced == false then
+                if x >= keyPosition and x < (keyPosition + 5) and keyPlaced == false then
                     table.insert(objects,
                         GameObject {
                             texture = 'key',
@@ -97,7 +97,6 @@ function LevelMaker.generate(width, height)
                             onConsume = function (player, object)
                                 gSounds['pickup']:play()
                                 player.hasKey = true
-                                player.keyColor = keyColor
                             end
                         }
                     )
@@ -105,7 +104,7 @@ function LevelMaker.generate(width, height)
                 end
 
                 -- chance to generate a lock on pillar
-                if x >= (width - 15) and x <= (width - 10) and lockPlaced == false then
+                if x >= 85 and x <= 90 and lockPlaced == false then
                     table.insert(objects,
                         GameObject {
                             texture = 'lock',
@@ -143,7 +142,7 @@ function LevelMaker.generate(width, height)
                                     raisable = true,
                                     raised = false,
                                     
-                                    onRaise = function (player, object)
+                                    onRaise = function (object)
                                         local flagId = flagColor - 2
                                         local x = 1
                                         Timer.every(0.5, function () 
@@ -160,14 +159,6 @@ function LevelMaker.generate(width, height)
                                             gSounds['powerup-reveal']:play()
                                             object.raised = true
                                         end
-
-                                        Timer.after(2, function ()
-                                            gStateMachine:change('play', {
-                                                score = player.score,
-                                                levelNumber = player.levelNumber + 1,
-                                                levelWidth = width + (width / (player.levelNumber + 1))
-                                            })
-                                        end)
                                     end
                                 }
                                 table.insert(objects, flagPole)
@@ -185,7 +176,7 @@ function LevelMaker.generate(width, height)
                 tiles[7][x].topper = nil
             
             -- chance to generate bushes
-            elseif math.random(8) == 1 and x < (width - 5) then
+            elseif math.random(8) == 1 and x < 95 then
                 table.insert(objects,
                     GameObject {
                         texture = 'bushes',
@@ -200,7 +191,7 @@ function LevelMaker.generate(width, height)
             end
 
             -- chance to generate a key
-            if x >= keyPosition and x <= (keyPosition + 5) and keyPlaced == false then
+            if x >= keyPosition and x < (keyPosition + 5) and keyPlaced == false then
                 table.insert(objects,
                     GameObject {
                         texture = 'key',
@@ -215,7 +206,6 @@ function LevelMaker.generate(width, height)
                         onConsume = function (player, object)
                             gSounds['pickup']:play()
                             player.hasKey = true
-                            player.keyColor = keyColor
                         end
                     }
                 )
@@ -223,7 +213,7 @@ function LevelMaker.generate(width, height)
             end
 
             -- chance to generate a lock
-            if x >= (width - 15) and x <= (width - 10) and lockPlaced == false then
+            if x >= 85 and x <= 90 and lockPlaced == false then
                 table.insert(objects,
                     GameObject {
                         texture = 'lock',
@@ -260,7 +250,7 @@ function LevelMaker.generate(width, height)
                                 collidable = true,
                                 raisable = true,
 
-                                onRaise = function (player, object)
+                                onRaise = function (object)
                                     local flagId = flagColor - 2
                                     local x = 1
                                     Timer.every(0.5, function () 
@@ -277,17 +267,11 @@ function LevelMaker.generate(width, height)
                                         gSounds['powerup-reveal']:play()
                                         object.raised = true
                                     end
-
-                                    Timer.after(2, function ()
-                                        gStateMachine:change('play', {
-                                            score = player.score,
-                                            levelNumber = player.levelNumber + 1,
-                                            levelWidth = width + (width / (player.levelNumber + 1))
-                                        })
-                                    end)
                                 end
                             }
                             table.insert(objects, flagPole)
+
+                            
                         end
                     }
                 )
@@ -295,7 +279,7 @@ function LevelMaker.generate(width, height)
             end
 
             -- chance to spawn a block
-            if math.random(10) == 1 and x < (width - 10) then
+            if math.random(10) == 1 and x < 90 then
                 table.insert(objects,
 
                     -- jump block

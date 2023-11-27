@@ -25,7 +25,6 @@ function GameObject:init(def)
     self.onUnlock = def.onUnlock
     self.onRaise = def.onRaise
     self.hit = def.hit
-    self.raised = def.raised
 end
 
 function GameObject:collides(target)

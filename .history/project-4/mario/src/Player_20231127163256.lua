@@ -15,7 +15,7 @@ function Player:init(def)
     self.score = 0
     self.hasKey = false
     self.keyColor = 0
-    self.levelNumber = 0
+    self.level = 0
 end
 
 function Player:update(dt)

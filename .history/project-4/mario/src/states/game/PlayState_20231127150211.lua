@@ -8,15 +8,9 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
-    
-end
-
-function PlayState:enter(params)
     self.camX = 0
     self.camY = 0
-    self.levelNumber = params.levelNumber
-    self.levelWidth = params.levelWidth or 100
-    self.level = LevelMaker.generate(self.levelWidth, 10)
+    self.level = LevelMaker.generate(100, 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
     self.backgroundX = 0
@@ -40,22 +34,17 @@ function PlayState:enter(params)
         level = self.level
     })
 
-    self.player.score = params.score or 0
-    self.player.levelNumber = params.levelNumber or 1
-
-    self.distance = 0
-
     self:spawnEnemies()
 
     self.player:changeState('falling')
 end
---[[
+
 function PlayState:enter(params)
     self.player.score = params.score or 0
-    self.player.levelNumber = params.levelNumber or 1
-    self.test = self.player.levelNumber
+    self.levelNumber = params.levelNumber or 1
+        
 end
-]]
+
 function PlayState:checkForGround()
     local mapTiles = self.tileMap.tiles
     local horizontalSpawnPoint = 0
@@ -88,8 +77,6 @@ function PlayState:update(dt)
     elseif self.player.x > TILE_SIZE * self.tileMap.width - self.player.width then
         self.player.x = TILE_SIZE * self.tileMap.width - self.player.width
     end
-
-    self.distance = math.floor(self.player.x / 16 + 1)
 end
 
 function PlayState:render()
@@ -116,41 +103,13 @@ function PlayState:render()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(tostring(self.player.score), 4, 4)
 
-    --render level Number
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print("Level: ", VIRTUAL_WIDTH / 4, 5)
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print("Level: ", VIRTUAL_WIDTH / 4 - 1, 4)
-
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print(tostring(self.levelNumber), VIRTUAL_WIDTH / 4 + 25, 5)
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print(tostring(self.levelNumber), VIRTUAL_WIDTH / 4 + 24, 4)
-
-    -- render distance
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print("Distance: ", VIRTUAL_WIDTH / 2, 5)
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print("Distance: ", VIRTUAL_WIDTH / 2 - 1, 4)
-
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 40, 5)
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 39, 4)
-
-
     -- show icon if player has a key
     if self.player.hasKey then
         love.graphics.draw(gTextures['key'], gFrames['key'][self.player.keyColor], VIRTUAL_WIDTH - 21, 5)
     end
 
-    -- debug
     if self.test then
-        love.graphics.printf(self.test, 1, 40, VIRTUAL_WIDTH, 'center') 
+        love.graphics.printf(self.test, 1, 40, VIRTUAL_WIDTH, 'right') 
     end
 end
 

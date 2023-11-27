@@ -16,6 +16,9 @@ function PlayState:enter(params)
     self.camY = 0
     self.levelNumber = params.levelNumber
     self.levelWidth = params.levelWidth or 100
+    if self.levelNumber > 1 then
+        self.levelWidth = self.levelWidth + (self.levelWidth / self.levelNumber)
+    end
     self.level = LevelMaker.generate(self.levelWidth, 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)

@@ -165,7 +165,7 @@ function LevelMaker.generate(width, height)
                                             gStateMachine:change('play', {
                                                 score = player.score,
                                                 levelNumber = player.levelNumber + 1,
-                                                levelWidth = width + (width / (player.levelNumber + 1))
+                                                levelWidth = width + (width / player.levelNumber + 1)
                                             })
                                         end)
                                     end
@@ -282,7 +282,7 @@ function LevelMaker.generate(width, height)
                                         gStateMachine:change('play', {
                                             score = player.score,
                                             levelNumber = player.levelNumber + 1,
-                                            levelWidth = width + (width / (player.levelNumber + 1))
+                                            levelWidth = width + (width / player.levelNumber + 1)
                                         })
                                     end)
                                 end

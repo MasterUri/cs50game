@@ -15,7 +15,10 @@ function PlayState:enter(params)
     self.camX = 0
     self.camY = 0
     self.levelNumber = params.levelNumber
-    self.levelWidth = params.levelWidth or 100
+    self.levelWidth = 100
+    if self.levelNumber > 1 then
+        self.levelWidth = self.levelWidth + (self.levelWidth / self.levelNumber)
+    end
     self.level = LevelMaker.generate(self.levelWidth, 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
@@ -43,7 +46,7 @@ function PlayState:enter(params)
     self.player.score = params.score or 0
     self.player.levelNumber = params.levelNumber or 1
 
-    self.distance = 0
+    self.steps = 0
 
     self:spawnEnemies()
 
@@ -89,7 +92,7 @@ function PlayState:update(dt)
         self.player.x = TILE_SIZE * self.tileMap.width - self.player.width
     end
 
-    self.distance = math.floor(self.player.x / 16 + 1)
+    self.steps = math.floor(self.player.x / 16 + 1)
 end
 
 function PlayState:render()
@@ -117,30 +120,30 @@ function PlayState:render()
     love.graphics.print(tostring(self.player.score), 4, 4)
 
     --render level Number
-    love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(gFonts['medium'])
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.print("Level: ", VIRTUAL_WIDTH / 4, 5)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print("Level: ", VIRTUAL_WIDTH / 4 - 1, 4)
 
-    love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(gFonts['medium'])
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print(tostring(self.levelNumber), VIRTUAL_WIDTH / 4 + 25, 5)
+    love.graphics.print(tostring(self.levelNumber), VIRTUAL_WIDTH / 2, 5)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print(tostring(self.levelNumber), VIRTUAL_WIDTH / 4 + 24, 4)
+    love.graphics.print(tostring(self.levelNumber), VIRTUAL_WIDTH / 2 - 1, 4)
 
     -- render distance
-    love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(gFonts['medium'])
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print("Distance: ", VIRTUAL_WIDTH / 2, 5)
+    love.graphics.print("Steps: ", VIRTUAL_WIDTH - (VIRTUAL_WIDTH / 4), 5)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print("Distance: ", VIRTUAL_WIDTH / 2 - 1, 4)
+    love.graphics.print("Steps: ", VIRTUAL_WIDTH - (VIRTUAL_WIDTH / 4) - 1, 4)
 
-    love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(gFonts['medium'])
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 40, 5)
+    love.graphics.print(tostring(self.steps), VIRTUAL_WIDTH - (VIRTUAL_WIDTH / 4) + 20, 5)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print(tostring(self.distance), VIRTUAL_WIDTH / 2 + 39, 4)
+    love.graphics.print(tostring(self.steps), VIRTUAL_WIDTH - (VIRTUAL_WIDTH / 4) + 19, 4)
 
 
     -- show icon if player has a key
