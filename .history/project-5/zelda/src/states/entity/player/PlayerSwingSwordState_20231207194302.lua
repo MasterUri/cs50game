@@ -67,7 +67,7 @@ function PlayerSwingSwordState:update(dt)
             entity:damage(1)
             gSounds['hit-enemy']:play()
             if not self.player.collisionProcessing then
-                if math.random(4) == 1 then
+                if math.random(5) == 1 then
                     local heart = GameObject(
                         GAME_OBJECT_DEFS['heart'],
                         entity.x,

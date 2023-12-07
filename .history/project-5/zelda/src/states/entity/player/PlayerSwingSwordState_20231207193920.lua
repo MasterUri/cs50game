@@ -67,31 +67,29 @@ function PlayerSwingSwordState:update(dt)
             entity:damage(1)
             gSounds['hit-enemy']:play()
             if not self.player.collisionProcessing then
-                if math.random(4) == 1 then
-                    local heart = GameObject(
-                        GAME_OBJECT_DEFS['heart'],
-                        entity.x,
-                        entity.y
-                    )
+                local heart = GameObject(
+                    GAME_OBJECT_DEFS['heart'],
+                    entity.x,
+                    entity.y
+                )
 
-                    heart.onCollide = function ()
-                        if not heart.consumed then
-                            heart.consumed = true
-                            if not self.player.heartProcessing then
-                                if self.player.health < 6 then
-                                    if (self.player.health + 2) > 6 then
-                                        self.player.health = 6
-                                    else
-                                        self.player:damage(-2)
-                                    end
+                heart.onCollide = function ()
+                    if not heart.consumed then
+                        heart.consumed = true
+                        if not self.player.heartProcessing then
+                            if self.player.health < 6 then
+                                if (self.player.health + 2) > 6 then
+                                    self.player.health = 6
+                                else
+                                    self.player:damage(-2)
                                 end
-                                self.player.heartProcessing = true
                             end
+                            self.player.heartProcessing = true
                         end
                     end
-                
-                    table.insert(self.dungeon.currentRoom.objects, heart)
                 end
+            
+                table.insert(self.dungeon.currentRoom.objects, heart)
                 self.player.collisionProcessing = true
             end
         end
