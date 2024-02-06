@@ -26,10 +26,9 @@ function AlienLaunchMarker:init(world)
     self.launched = false
 
     -- our alien we will eventually spawn
-    --self.alien = nil
-    self.aliens = {}
+    self.alien = nil
 
-    -- flag for if the alien has hit anything
+    -- flag in case our alien has hit something
     self.hit = false
 end
 
@@ -50,14 +49,14 @@ function AlienLaunchMarker:update(dt)
             self.launched = true
 
             -- spawn new alien in the world, passing in user data of player
-            self.aliens[1] = Alien(self.world, 'round', self.shiftedX, self.shiftedY, 'Player')
+            self.alien = Alien(self.world, 'round', self.shiftedX, self.shiftedY, 'Player')
 
             -- apply the difference between current X,Y and base X,Y as launch vector impulse
-            self.aliens[1].body:setLinearVelocity((self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
+            self.alien.body:setLinearVelocity((self.baseX - self.shiftedX) * 10, (self.baseY - self.shiftedY) * 10)
 
             -- make the alien pretty bouncy
-            self.aliens[1].fixture:setRestitution(0.4)
-            self.aliens[1].body:setAngularDamping(1)
+            self.alien.fixture:setRestitution(0.4)
+            self.alien.body:setAngularDamping(1)
 
             -- we're no longer aiming
             self.aiming = false
@@ -67,27 +66,6 @@ function AlienLaunchMarker:update(dt)
             
             self.shiftedX = math.min(self.baseX + 30, math.max(x, self.baseX - 30))
             self.shiftedY = math.min(self.baseY + 30, math.max(y, self.baseY - 30))
-        end
-    else
-        if love.keyboard.wasPressed('space') and not self.hit then
-            local newX = self.shiftedX 
-            local newY = self.shiftedY - 5
-
-            local posX = self.aliens[1].body:getX()
-            local posY = self.aliens[1].body:getY() - 35
-            
-            for i = 2, 3 do
-                self.aliens[i] = Alien(self.world, 'round', posX, posY, 'Player')
-                
-                self.aliens[i].body:setLinearVelocity((self.baseX - newX) * 10, (self.baseY - newY) * 10)
-
-                self.aliens[i].fixture:setRestitution(0.4)
-                self.aliens[i].body:setAngularDamping(1)
-                
-                posY = posY + 70
-
-                newY = newY + 10
-            end
         end
     end
 end
@@ -128,8 +106,6 @@ function AlienLaunchMarker:render()
         
         love.graphics.setColor(1, 1, 1, 1)
     else
-        for k, alien in pairs(self.aliens) do
-            alien:render()
-        end
+        self.alien:render()
     end
 end

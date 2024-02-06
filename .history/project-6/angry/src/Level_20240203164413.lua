@@ -39,8 +39,6 @@ function Level:init()
             if sumVel > 20 then
                 table.insert(self.destroyedBodies, obstacleFixture:getBody())
             end
-
-            self.launchMarker.hit = true
         end
 
         -- if we collided between an obstacle and an alien, as by debris falling...
@@ -73,16 +71,12 @@ function Level:init()
             if sumVel > 20 then
                 table.insert(self.destroyedBodies, alienFixture:getBody())
             end
-
-            self.launchMarker.hit = true
         end
 
         -- if we hit the ground, play a bounce sound
         if types['Player'] and types['Ground'] then
             gSounds['bounce']:stop()
             gSounds['bounce']:play()
-
-            self.launchMarker.hit = true
         end
     end
 
@@ -135,9 +129,6 @@ function Level:init()
 
     -- background graphics
     self.background = Background()
-
-    -- counter to check if all aliens have stopped rolling
-    self.stopCounter = 0
 end
 
 function Level:update(dt)
@@ -181,24 +172,13 @@ function Level:update(dt)
 
     -- replace launch marker if original alien stopped moving
     if self.launchMarker.launched then
+        local xPos, yPos = self.launchMarker.alien.body:getPosition()
+        local xVel, yVel = self.launchMarker.alien.body:getLinearVelocity()
         
-        for i = 1, #self.launchMarker.aliens do
-            if self.launchMarker.aliens[i].stopped == false then 
-                local xPos, yPos = self.launchMarker.aliens[i].body:getPosition()
-                local xVel, yVel = self.launchMarker.aliens[i].body:getLinearVelocity()
-                
-                -- if we fired our alien to the left or it's almost done rolling, respawn
-                if xPos < 0 or (math.abs(xVel) + math.abs(yVel) < 1.5) or xPos > VIRTUAL_WIDTH * 2 then
-                    self.launchMarker.aliens[i].stopped = true
-                    self.stopCounter = self.stopCounter + 1
-                    self.launchMarker.aliens[i].body:destroy()
-                end
-            end
-        end
-        if self.stopCounter == #self.launchMarker.aliens then
-            
+        -- if we fired our alien to the left or it's almost done rolling, respawn
+        if xPos < 0 or (math.abs(xVel) + math.abs(yVel) < 1.5) then
+            self.launchMarker.alien.body:destroy()
             self.launchMarker = AlienLaunchMarker(self.world)
-            self.stopCounter = 0
 
             -- re-initialize level if we have no more aliens
             if #self.aliens == 0 then

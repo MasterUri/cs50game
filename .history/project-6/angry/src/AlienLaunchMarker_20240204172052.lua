@@ -86,6 +86,7 @@ function AlienLaunchMarker:update(dt)
                 
                 posY = posY + 70
 
+                -- newX = newX + 20
                 newY = newY + 10
             end
         end

@@ -81,8 +81,6 @@ function Level:init()
         if types['Player'] and types['Ground'] then
             gSounds['bounce']:stop()
             gSounds['bounce']:play()
-
-            self.launchMarker.hit = true
         end
     end
 
@@ -135,9 +133,6 @@ function Level:init()
 
     -- background graphics
     self.background = Background()
-
-    -- counter to check if all aliens have stopped rolling
-    self.stopCounter = 0
 end
 
 function Level:update(dt)
@@ -181,28 +176,19 @@ function Level:update(dt)
 
     -- replace launch marker if original alien stopped moving
     if self.launchMarker.launched then
-        
-        for i = 1, #self.launchMarker.aliens do
-            if self.launchMarker.aliens[i].stopped == false then 
-                local xPos, yPos = self.launchMarker.aliens[i].body:getPosition()
-                local xVel, yVel = self.launchMarker.aliens[i].body:getLinearVelocity()
-                
-                -- if we fired our alien to the left or it's almost done rolling, respawn
-                if xPos < 0 or (math.abs(xVel) + math.abs(yVel) < 1.5) or xPos > VIRTUAL_WIDTH * 2 then
-                    self.launchMarker.aliens[i].stopped = true
-                    self.stopCounter = self.stopCounter + 1
-                    self.launchMarker.aliens[i].body:destroy()
-                end
-            end
-        end
-        if self.stopCounter == #self.launchMarker.aliens then
+        for k, alien in pairs(self.launchMarker.aliens) do
+            local xPos, yPos = alien.body:getPosition()
+            local xVel, yVel = alien.body:getLinearVelocity()
             
-            self.launchMarker = AlienLaunchMarker(self.world)
-            self.stopCounter = 0
+            -- if we fired our alien to the left or it's almost done rolling, respawn
+            if xPos < 0 or (math.abs(xVel) + math.abs(yVel) < 1.5) then
+                self.alien.body:destroy()
+                self.launchMarker = AlienLaunchMarker(self.world)
 
-            -- re-initialize level if we have no more aliens
-            if #self.aliens == 0 then
-                gStateMachine:change('start')
+                -- re-initialize level if we have no more aliens
+                if #self.aliens == 0 then
+                    gStateMachine:change('start')
+                end
             end
         end
     end

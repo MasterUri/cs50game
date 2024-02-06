@@ -136,7 +136,8 @@ function Level:init()
     -- background graphics
     self.background = Background()
 
-    -- counter to check if all aliens have stopped rolling
+    self.test = 0
+
     self.stopCounter = 0
 end
 
@@ -196,15 +197,18 @@ function Level:update(dt)
             end
         end
         if self.stopCounter == #self.launchMarker.aliens then
+            -- for i = 1, #self.launchMarker.aliens do
+            --     self.launchMarker.aliens[i].body:destroy()
+            -- end
             
             self.launchMarker = AlienLaunchMarker(self.world)
-            self.stopCounter = 0
 
             -- re-initialize level if we have no more aliens
             if #self.aliens == 0 then
                 gStateMachine:change('start')
             end
         end
+        self.test = self.stopCounter
     end
 end
 
@@ -241,4 +245,10 @@ function Level:render()
         love.graphics.printf('VICTORY', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(1, 1, 1, 1)
     end
+
+    -- test
+    love.graphics.setFont(gFonts['huge'])
+    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.printf(self.test, 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
+    love.graphics.setColor(1, 1, 1, 1)
 end

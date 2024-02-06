@@ -71,7 +71,7 @@ function AlienLaunchMarker:update(dt)
     else
         if love.keyboard.wasPressed('space') and not self.hit then
             local newX = self.shiftedX 
-            local newY = self.shiftedY - 5
+            local newY = self.shiftedY - 10
 
             local posX = self.aliens[1].body:getX()
             local posY = self.aliens[1].body:getY() - 35
@@ -79,14 +79,16 @@ function AlienLaunchMarker:update(dt)
             for i = 2, 3 do
                 self.aliens[i] = Alien(self.world, 'round', posX, posY, 'Player')
                 
-                self.aliens[i].body:setLinearVelocity((self.baseX - newX) * 10, (self.baseY - newY) * 10)
+                -- self.aliens[i].body:setLinearVelocity((self.baseX - newX) * 10, (self.baseY - newY) * 10)
+                self.aliens[i].body:setLinearVelocity(self.aliens[1].body:getLinearVelocity())
 
                 self.aliens[i].fixture:setRestitution(0.4)
                 self.aliens[i].body:setAngularDamping(1)
                 
                 posY = posY + 70
 
-                newY = newY + 10
+                -- newX = newX + 20
+                newY = newY + 20
             end
         end
     end

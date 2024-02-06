@@ -70,8 +70,8 @@ function AlienLaunchMarker:update(dt)
         end
     else
         if love.keyboard.wasPressed('space') and not self.hit then
-            local newX = self.shiftedX 
-            local newY = self.shiftedY - 5
+            local newX = self.shiftedX - 1
+            local newY = self.shiftedY - 1
 
             local posX = self.aliens[1].body:getX()
             local posY = self.aliens[1].body:getY() - 35
@@ -83,10 +83,9 @@ function AlienLaunchMarker:update(dt)
 
                 self.aliens[i].fixture:setRestitution(0.4)
                 self.aliens[i].body:setAngularDamping(1)
-                
-                posY = posY + 70
 
-                newY = newY + 10
+                newX = newX + 2
+                newY = newY + 2
             end
         end
     end

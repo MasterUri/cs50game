@@ -70,8 +70,8 @@ function AlienLaunchMarker:update(dt)
         end
     else
         if love.keyboard.wasPressed('space') and not self.hit then
-            local newX = self.shiftedX 
-            local newY = self.shiftedY - 5
+            local newX = self.shiftedX - 50
+            local newY = self.shiftedY - 50
 
             local posX = self.aliens[1].body:getX()
             local posY = self.aliens[1].body:getY() - 35
@@ -86,7 +86,8 @@ function AlienLaunchMarker:update(dt)
                 
                 posY = posY + 70
 
-                newY = newY + 10
+                newX = newX + 100
+                newY = newY + 100
             end
         end
     end

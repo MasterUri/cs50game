@@ -12,8 +12,8 @@ function Alien:init(world, type, x, y, userData)
     self.world = world
     self.type = type or 'square'
 
-    -- flag to see if the alien has stopped moving
-    self.stopped = false
+    -- flag to see if the alien has been destroyed
+    self.destroyed = false
 
     self.body = love.physics.newBody(self.world, 
         x or math.random(VIRTUAL_WIDTH), y or math.random(VIRTUAL_HEIGHT - 35),
@@ -37,9 +37,7 @@ function Alien:init(world, type, x, y, userData)
 end
 
 function Alien:render()
-    if self.stopped == false then
-        love.graphics.draw(gTextures['aliens'], gFrames['aliens'][self.sprite],
-            math.floor(self.body:getX()), math.floor(self.body:getY()), self.body:getAngle(),
-            1, 1, 17.5, 17.5)
-    end
+    love.graphics.draw(gTextures['aliens'], gFrames['aliens'][self.sprite],
+        math.floor(self.body:getX()), math.floor(self.body:getY()), self.body:getAngle(),
+        1, 1, 17.5, 17.5)
 end
