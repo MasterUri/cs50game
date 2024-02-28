@@ -217,10 +217,10 @@ function TakeTurnState:victory()
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',
                         function()
-                            gStateStack:push(LevelUpMenuState(self.playerPokemon, levelUpStats,
-                            function ()
-                                self:fadeOutWhite()
-                            end))
+                            gStateStack:push(LevelUpMenuState(self.playerPokemon, levelUpStats))
+                            if love.keypressed('return') or love.keypressed('enter') then
+                                 self:fadeOutWhite()
+                            end
                         end))
                     else
                         self:fadeOutWhite()
@@ -244,7 +244,7 @@ function TakeTurnState:fadeOutWhite()
         
         -- pop off the battle state
         gStateStack:pop()
-        --gStateStack:pop()
+        gStateStack:pop()
         gStateStack:push(FadeOutState({
             r = 1, g = 1, b = 1
         }, 1, function() end))

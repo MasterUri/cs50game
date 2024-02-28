@@ -14,19 +14,23 @@ Menu = Class{}
 
 function Menu:init(def)
     self.panel = Panel(def.x, def.y, def.width, def.height)
+    self.selectable = true
     
-    self.selection = Selection {
-        items = def.items,
-        x = def.x,
-        y = def.y,
-        width = def.width,
-        height = def.height,
-        selectable = def.selectable
-    }
+    if self.selectable then
+        self.selection = Selection {
+            items = def.items,
+            x = def.x,
+            y = def.y,
+            width = def.width,
+            height = def.height
+        }
+    end
 end
 
 function Menu:update(dt)
-    self.selection:update(dt)
+    if self.selectable then
+        self.selection:update(dt)
+    end
 end
 
 function Menu:render()

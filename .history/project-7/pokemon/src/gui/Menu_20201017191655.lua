@@ -20,8 +20,7 @@ function Menu:init(def)
         x = def.x,
         y = def.y,
         width = def.width,
-        height = def.height,
-        selectable = def.selectable
+        height = def.height
     }
 end
 

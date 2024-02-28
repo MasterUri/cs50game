@@ -17,7 +17,7 @@ function Selection:init(def)
     self.items = def.items
     self.x = def.x
     self.y = def.y
-    self.selectable = def.selectable
+    self.selectable = def.selectable or true
 
     self.height = def.height
     self.width = def.width
@@ -63,8 +63,8 @@ function Selection:render()
     for i = 1, #self.items do
         local paddedY = currentY + (self.gapHeight / 2) - self.font:getHeight() / 2
 
+        -- draw selection marker if we're at the right index
         if self.selectable then
-            -- draw selection marker if we're at the right index
             if i == self.currentSelection then
                 love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
             end

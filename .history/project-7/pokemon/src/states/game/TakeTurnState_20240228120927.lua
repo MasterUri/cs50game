@@ -166,7 +166,7 @@ function TakeTurnState:faint()
     end)
 end
 
-function TakeTurnState:victory()
+function TakeTurnState:victory(dt)
 
     -- drop enemy sprite down below the window
     Timer.tween(0.2, {
@@ -217,10 +217,14 @@ function TakeTurnState:victory()
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',
                         function()
-                            gStateStack:push(LevelUpMenuState(self.playerPokemon, levelUpStats,
-                            function ()
-                                self:fadeOutWhite()
-                            end))
+                            gStateStack:push(LevelUpMenuState(self.playerPokemon, levelUpStats))
+                            local timer = 0
+                            timer = timer + dt
+                            if timer >= 2 then
+                                if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
+                                    self:fadeOutWhite()
+                                end
+                            end
                         end))
                     else
                         self:fadeOutWhite()
@@ -244,7 +248,7 @@ function TakeTurnState:fadeOutWhite()
         
         -- pop off the battle state
         gStateStack:pop()
-        --gStateStack:pop()
+        gStateStack:pop()
         gStateStack:push(FadeOutState({
             r = 1, g = 1, b = 1
         }, 1, function() end))

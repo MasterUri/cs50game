@@ -60,18 +60,18 @@ end
 function Selection:render()
     local currentY = self.y
 
-    for i = 1, #self.items do
-        local paddedY = currentY + (self.gapHeight / 2) - self.font:getHeight() / 2
+    if self.selectable then
+        for i = 1, #self.items do
+            local paddedY = currentY + (self.gapHeight / 2) - self.font:getHeight() / 2
 
-        if self.selectable then
             -- draw selection marker if we're at the right index
             if i == self.currentSelection then
                 love.graphics.draw(gTextures['cursor'], self.x - 8, paddedY)
             end
+
+            love.graphics.printf(self.items[i].text, self.x, paddedY, self.width, 'center')
+
+            currentY = currentY + self.gapHeight
         end
-
-        love.graphics.printf(self.items[i].text, self.x, paddedY, self.width, 'center')
-
-        currentY = currentY + self.gapHeight
     end
 end

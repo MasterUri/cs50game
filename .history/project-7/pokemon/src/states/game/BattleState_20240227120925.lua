@@ -115,19 +115,13 @@ function BattleState:render()
         love.graphics.setColor(1, 1, 1, 1)
     end
 
-    self.bottomPanel:render()
+    --test
+    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.print('HP ' .. tostring(self.playerPokemon.HP),
+        VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2)
 
-    -- --test
-    -- love.graphics.setColor(0, 0, 0, 1)
-    -- love.graphics.setFont(gFonts['small'])
-    -- love.graphics.print('HP ' .. tostring(self.playerPokemon.HP),
-    --     VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 - 14)
-    -- love.graphics.print('At ' .. tostring(self.playerPokemon.attack),
-    --     VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 - 7)
-    -- love.graphics.print('Df ' .. tostring(self.playerPokemon.defense),
-    --     VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2)
-    -- love.graphics.print('Sp ' .. tostring(self.playerPokemon.speed),
-    --     VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 + 7)
+    self.bottomPanel:render()
 end
 
 function BattleState:triggerSlideIn()

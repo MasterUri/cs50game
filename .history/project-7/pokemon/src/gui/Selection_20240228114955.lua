@@ -17,7 +17,7 @@ function Selection:init(def)
     self.items = def.items
     self.x = def.x
     self.y = def.y
-    self.selectable = def.selectable
+    self.selectable = def.selectable or true
 
     self.height = def.height
     self.width = def.width

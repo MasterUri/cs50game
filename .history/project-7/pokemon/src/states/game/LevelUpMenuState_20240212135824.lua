@@ -2,27 +2,26 @@
     GD50
     Pokemon
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    Author: Yurii Moskva
+    i_moskva@yahoo.com
 ]]
 
-BattleMenuState = Class{__includes = BaseState}
+LevelUpMenuState = Class{__includes = BaseState}
 
-function BattleMenuState:init(battleState)
-    self.battleState = battleState
+function LevelUpMenuState:init(levelUpState)
+    self.levelUpState = levelUpState
     
-    self.battleMenu = Menu {
-        x = VIRTUAL_WIDTH - 64,
+    self.levelUpMenu = Menu {
+        x = VIRTUAL_WIDTH - VIRTUAL_WIDTH / 3,
         y = VIRTUAL_HEIGHT - 64,
         width = 64,
         height = 64,
-        selectable = true,
         items = {
             {
-                text = 'Fight',
+                text = 'HP',
                 onSelect = function()
                     gStateStack:pop()
-                    gStateStack:push(TakeTurnState(self.battleState))
+                    gStateStack:push(TakeTurnState(self.levelUpState))
                 end
             },
             {
@@ -30,19 +29,19 @@ function BattleMenuState:init(battleState)
                 onSelect = function()
                     gSounds['run']:play()
                     
-                    -- pop battle menu
+                    -- pop levelUp menu
                     gStateStack:pop()
 
                     -- show a message saying they successfully ran, then fade in
                     -- and out back to the field automatically
-                    gStateStack:push(BattleMessageState('You fled successfully!',
+                    gStateStack:push(levelUpMessageState('You fled successfully!',
                         function() end), false)
                     Timer.after(0.5, function()
                         gStateStack:push(FadeInState({
                             r = 1, g = 1, b = 1
                         }, 1,
                         
-                        -- pop message and battle state and add a fade to blend in the field
+                        -- pop message and levelUp state and add a fade to blend in the field
                         function()
 
                             -- resume field music
@@ -51,7 +50,7 @@ function BattleMenuState:init(battleState)
                             -- pop message state
                             gStateStack:pop()
 
-                            -- pop battle state
+                            -- pop levelUp state
                             gStateStack:pop()
 
                             gStateStack:push(FadeOutState({
@@ -67,10 +66,10 @@ function BattleMenuState:init(battleState)
     }
 end
 
-function BattleMenuState:update(dt)
-    self.battleMenu:update(dt)
+function LevelUpMenuState:update(dt)
+    self.levelUpMenu:update(dt)
 end
 
-function BattleMenuState:render()
-    self.battleMenu:render()
+function LevelUpMenuState:render()
+    self.levelUpMenu:render()
 end

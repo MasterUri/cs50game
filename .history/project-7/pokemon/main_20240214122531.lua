@@ -40,18 +40,18 @@
     Battle: https://freesound.org/people/Sirkoto51/sounds/414214/
 ]]
 
-love.graphics.setDefaultFilter('nearest', 'nearest')
 require 'src/Dependencies'
 
 function love.load()
     love.window.setTitle('Poke50')
-    -- love.graphics.setDefaultFilter('nearest', 'nearest')
+    love.graphics.setDefaultFilter('nearest', 'nearest')
     math.randomseed(os.time())
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
-        resizable = true
+        resizable = true,
+        canvas = false
     })
 
     -- this time, we are using a stack for all of our states, where the field state is the

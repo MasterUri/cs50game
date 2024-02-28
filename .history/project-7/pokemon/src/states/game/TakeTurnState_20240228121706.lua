@@ -244,7 +244,7 @@ function TakeTurnState:fadeOutWhite()
         
         -- pop off the battle state
         gStateStack:pop()
-        --gStateStack:pop()
+        gStateStack:pop()
         gStateStack:push(FadeOutState({
             r = 1, g = 1, b = 1
         }, 1, function() end))
