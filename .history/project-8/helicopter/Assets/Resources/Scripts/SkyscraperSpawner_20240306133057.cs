@@ -6,8 +6,6 @@ public class SkyscraperSpawner : MonoBehaviour {
 	public GameObject[] prefabs;
 	public static float speed = 10f;
 
-	public float speedTest = 0f;
-
 	// Use this for initialization
 	void Start () {
 
@@ -17,7 +15,7 @@ public class SkyscraperSpawner : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		speedTest = speed;
+
 	}
 
 	IEnumerator SpawnSkyscrapers() {

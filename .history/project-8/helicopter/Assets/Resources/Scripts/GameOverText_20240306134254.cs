@@ -9,6 +9,8 @@ public class GameOverText : MonoBehaviour {
 	private Text text;
 	private int coins;
 
+	public GameObject skyscraper 
+
 	// Use this for initialization
 	void Start () {
 		text = GetComponent<Text>();
@@ -31,8 +33,7 @@ public class GameOverText : MonoBehaviour {
 			// jump is space bar by default
 			if (Input.GetButtonDown("Jump")) {
 
-				// reset objets' moving speed
-				SkyscraperSpawner.speed = 10f;
+				
 
 				// reload entire scene, starting music over again, refreshing score, etc.
 				SceneManager.LoadScene("Main");
