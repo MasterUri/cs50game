@@ -33,17 +33,14 @@ public class LevelGenerator : MonoBehaviour {
 	// we use these to dig through our maze and to spawn the pickup at the end
 	private int mazeX = 4, mazeY = 1;
 
-	// allows to keep track how many holes we have placed
-	int holeCounter = 4;
-
 	// Use this for initialization
 	void Start () {
 
 		// initialize map 2D array
 		mapData = GenerateMazeData();
 
-		//for storing player's starting coordinates
-		int[] playerStart = new int[2];
+		// allows to keep track how many holes we have placed
+		int holeCounter = 0;
 
 		// create actual maze blocks from maze boolean data
 		for (int z = 0; z < mazeSize; z++) {
@@ -61,21 +58,30 @@ public class LevelGenerator : MonoBehaviour {
 
 					// flag as placed so we never consider placing again
 					characterPlaced = true;
-					playerStart[0] = z;
-					playerStart[1] = x;
 				}
 				
 				// create floor and ceiling
-
-				// flag for placing holes
-				bool placeHole = Random.value < 0.01 && z != playerStart[0] && x != playerStart[1] && 
-					!mapData[z, x] && holeCounter > 0;
-
-				if (placeHole){
-					holeCounter--;
+				if ((z >= 0 && z <= (mazeSize / 2)) && (x >= 0 && x <= (mazeSize / 2)) && holeCounter < 1){
+					if (!mapData[z, x] && Random.value < 0.3){
+						holeCounter++;
+					}
+				} else if ((z >= 0 && z <= (mazeSize / 2)) && (x > (mazeSize / 2) && x <= mazeSize) && holeCounter < 2){
+					if (!mapData[z, x] && Random.value < 0.3){
+						holeCounter++;
+					}
+				}else if ((z > (mazeSize / 2) && z <= mazeSize) && (x >= 0 && x <= (mazeSize / 2)) && holeCounter < 3){
+					if (!mapData[z, x] && Random.value < 0.3){
+						holeCounter++;
+					}
+				}else if ((z > (mazeSize / 2) && z <= mazeSize) && (x > (mazeSize / 2) && x <= mazeSize) && holeCounter < 4){
+					if (!mapData[z, x] && Random.value < 0.3){
+						holeCounter++;
+					}
 				} else {
 					CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
 				}
+				
+				
 
 				if (generateRoof) {
 					CreateChildPrefab(ceilingPrefab, wallsParent, x, 4, z);

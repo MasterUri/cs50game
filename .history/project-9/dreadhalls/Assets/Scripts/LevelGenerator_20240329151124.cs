@@ -68,7 +68,7 @@ public class LevelGenerator : MonoBehaviour {
 				// create floor and ceiling
 
 				// flag for placing holes
-				bool placeHole = Random.value < 0.01 && z != playerStart[0] && x != playerStart[1] && 
+				bool placeHole = Random.value < 0.3 && z != playerStart[0] && x != playerStart[1] && 
 					!mapData[z, x] && holeCounter > 0;
 
 				if (placeHole){

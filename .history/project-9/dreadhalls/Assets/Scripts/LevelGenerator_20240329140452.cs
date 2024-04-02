@@ -67,15 +67,18 @@ public class LevelGenerator : MonoBehaviour {
 				
 				// create floor and ceiling
 
-				// flag for placing holes
-				bool placeHole = Random.value < 0.01 && z != playerStart[0] && x != playerStart[1] && 
-					!mapData[z, x] && holeCounter > 0;
-
-				if (placeHole){
+				if(holeCounter!=0 && Random.Range(0,10)>8 && z>0 &&z<mazeSize-1)
+				{
+					//by not calling CreateChildPrefab for the floor it spawns a hole
 					holeCounter--;
-				} else {
+				}
+				else
+				{
+					// create floor and ceiling
 					CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
 				}
+
+				//CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
 
 				if (generateRoof) {
 					CreateChildPrefab(ceilingPrefab, wallsParent, x, 4, z);

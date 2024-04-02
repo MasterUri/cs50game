@@ -33,14 +33,14 @@ public class LevelGenerator : MonoBehaviour {
 	// we use these to dig through our maze and to spawn the pickup at the end
 	private int mazeX = 4, mazeY = 1;
 
-	// allows to keep track how many holes we have placed
-	int holeCounter = 4;
-
 	// Use this for initialization
 	void Start () {
 
 		// initialize map 2D array
 		mapData = GenerateMazeData();
+
+		// allows to keep track how many holes we have placed
+		int holeCounter = 0;
 
 		//for storing player's starting coordinates
 		int[] playerStart = new int[2];
@@ -66,16 +66,9 @@ public class LevelGenerator : MonoBehaviour {
 				}
 				
 				// create floor and ceiling
-
-				// flag for placing holes
-				bool placeHole = Random.value < 0.01 && z != playerStart[0] && x != playerStart[1] && 
-					!mapData[z, x] && holeCounter > 0;
-
-				if (placeHole){
-					holeCounter--;
-				} else {
-					CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
-				}
+				CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
+				
+				
 
 				if (generateRoof) {
 					CreateChildPrefab(ceilingPrefab, wallsParent, x, 4, z);

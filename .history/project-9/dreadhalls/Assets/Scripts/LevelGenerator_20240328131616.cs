@@ -33,17 +33,11 @@ public class LevelGenerator : MonoBehaviour {
 	// we use these to dig through our maze and to spawn the pickup at the end
 	private int mazeX = 4, mazeY = 1;
 
-	// allows to keep track how many holes we have placed
-	int holeCounter = 4;
-
 	// Use this for initialization
 	void Start () {
 
 		// initialize map 2D array
 		mapData = GenerateMazeData();
-
-		//for storing player's starting coordinates
-		int[] playerStart = new int[2];
 
 		// create actual maze blocks from maze boolean data
 		for (int z = 0; z < mazeSize; z++) {
@@ -61,21 +55,10 @@ public class LevelGenerator : MonoBehaviour {
 
 					// flag as placed so we never consider placing again
 					characterPlaced = true;
-					playerStart[0] = z;
-					playerStart[1] = x;
 				}
-				
+
 				// create floor and ceiling
-
-				// flag for placing holes
-				bool placeHole = Random.value < 0.01 && z != playerStart[0] && x != playerStart[1] && 
-					!mapData[z, x] && holeCounter > 0;
-
-				if (placeHole){
-					holeCounter--;
-				} else {
-					CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
-				}
+				CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
 
 				if (generateRoof) {
 					CreateChildPrefab(ceilingPrefab, wallsParent, x, 4, z);
@@ -103,6 +86,9 @@ public class LevelGenerator : MonoBehaviour {
 		// counter to ensure we consume a minimum number of tiles
 		int tilesConsumed = 0;
 
+		// counter to keep track of how many holes we dug
+		int holeCounter = 0;
+
 		// iterate our random crawler, clearing out walls and straying from edges
 		while (tilesConsumed < tilesToRemove) {
 			
@@ -119,10 +105,13 @@ public class LevelGenerator : MonoBehaviour {
 			// random number of spaces to move in this line
 			int numSpacesMove = (int)(Random.Range(1, mazeSize - 1));
 
+			// calculating how many wall tiles to clear creating holes in the ground as a result
+			int clearWalls = CalculateTilesToClear(holeCounter);
+
 			// move the number of spaces we just calculated, clearing tiles along the way
 			for (int i = 0; i < numSpacesMove; i++) {
-				mazeX = Mathf.Clamp(mazeX + xDirection, 1, mazeSize - 2);
-				mazeY = Mathf.Clamp(mazeY + yDirection, 1, mazeSize - 2);
+				mazeX = Mathf.Clamp(mazeX + xDirection, 1, mazeSize - clearWalls);
+				mazeY = Mathf.Clamp(mazeY + yDirection, 1, mazeSize - clearWalls);
 
 				if (data[mazeY, mazeX]) {
 					data[mazeY, mazeX] = false;
@@ -132,6 +121,15 @@ public class LevelGenerator : MonoBehaviour {
 		}
 
 		return data;
+	}
+
+	// returns a value that allows us to dig holes
+    int CalculateTilesToClear(int holeCounter){
+		int sizeToClear = 2;
+		if (holeCounter < 3 && Random.value < 0.5) {
+			sizeToClear = 3;
+		};
+		return sizeToClear;
 	}
 
 	// allow us to instantiate something and immediately make it the child of this game object's
