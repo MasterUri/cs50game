@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "burglar50.sln"
+    "dotnet.defaultSolution": "burglar50.sln",
+    "editor.codeLens": false
 }

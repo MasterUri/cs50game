@@ -20,6 +20,6 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = Input.GetAxis("Horizontal");
         float playerMove = moveInput  * speed * Time.deltaTime;
-        transform.Translate(new Vector3(playerMove, 0, 0));
+        transform.Translate(new Vector3(playerMove, 0, 0))
     }
 }
