@@ -15,13 +15,13 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        facingRight = true;
+        bag = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool("Bag", bag); //check if we have a bag
         DirectionCheck();
 
         float moveInput = Input.GetAxis("Horizontal");
@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
         transform.Translate(new Vector3(playerMove, 0, 0));
     }
 
-    // Check what direction we are facing
     void DirectionCheck(){
         if(playerMove > 0.01){
             facingRight = true;

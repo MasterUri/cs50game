@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Burglar_Walk
+  m_Name: Burglar_Idle_Back
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,19 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 0d73573dd0a032a43b3432300a2fc18d, type: 3}
-    - time: 0.16666667
-      value: {fileID: 21300000, guid: f0ed94ec8c0a0a24d98e165f528bbe6d, type: 3}
-    - time: 0.33333334
-      value: {fileID: 21300000, guid: 3c0f8f522cba892408aafa5c0d6b4048, type: 3}
-    - time: 0.5
-      value: {fileID: 21300000, guid: a3f0a49f52e24e5479b58e531cd7c1b9, type: 3}
+      value: {fileID: 21300000, guid: 099b068e2dc5b3c469139e4c2f5e0276, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 6
+  m_SampleRate: 1
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -50,16 +44,13 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 0d73573dd0a032a43b3432300a2fc18d, type: 3}
-    - {fileID: 21300000, guid: f0ed94ec8c0a0a24d98e165f528bbe6d, type: 3}
-    - {fileID: 21300000, guid: 3c0f8f522cba892408aafa5c0d6b4048, type: 3}
-    - {fileID: 21300000, guid: a3f0a49f52e24e5479b58e531cd7c1b9, type: 3}
+    - {fileID: 21300000, guid: 099b068e2dc5b3c469139e4c2f5e0276, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666667
+    m_StopTime: 1
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public bool facingRight = true;
     public bool bag = false;
-    public float speed = 10f;
+    public float speed = 5f;
 
     float playerMove;
 
