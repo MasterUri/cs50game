@@ -38,7 +38,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        DirectionCheck();
         if ((detectorLeft.detected == true || detectorRight.detected == true) && alert == false) {
             if (alert == false) {
                 audioSource.Play();
@@ -61,7 +60,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private void Update() {
-        //DirectionCheck();
+        DirectionCheck();
     }
 
     void DirectionCheck(){
